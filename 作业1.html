@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			function sj(n) {
+				var x = n;
+				for (var i = 0; i < n; i++) {
+					for (var m = 0; m < x; m++) {
+						document.write('&nbsp&nbsp')
+					}
+					for (var j = 0; j <= i; j++) {
+						document.write('&nbsp·&nbsp&nbsp')
+					}
+					document.write('<br/>')
+					x--;
+				}
+
+				document.write('<br/>')
+
+				x = n;
+				for (var i = 0; i < n; i++) {
+					for (var m = 0; m < x; m++) {
+						document.write('&nbsp')
+					}
+					for (var j = 0; j < n; j++) {
+						document.write('&nbsp·&nbsp&nbsp')
+					}
+					document.write('<br/>');
+					x--;
+				}
+
+				document.write('<br/>')
+
+				x = n;
+				for (var i = 0; i < n; i++) {
+					for (var m = 0; m < x; m++) {
+						document.write('&nbsp&nbsp&nbsp&nbsp')
+					}
+					for (var j = 1; j <= 2 * i - 1; j++) {
+						document.write('&nbsp·&nbsp&nbsp')
+					}
+					document.write('<br/>');
+					x--;
+				}
+				x = 2;
+				for (var i = n-2; i > 0; i--) {
+					for (var m = 0; m < x; m++) {
+						document.write('&nbsp&nbsp&nbsp&nbsp')
+					}
+					for (var j = 1; j <= 2 * i - 1; j++) {
+						document.write('&nbsp·&nbsp&nbsp')
+					}
+					document.write('<br/>');
+					x++;
+				}
+			}
+			var a = prompt("请输入几何图形的行数：");
+			//alert(a);
+			sj(a);
+		</script>
+	</body>
+</html>
