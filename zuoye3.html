@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>让坦克开起来</title>
+		<style type="text/css">
+			input{font-size:26px;margin-top: 20px;}
+			body{background-image: url(img/tank/grassland.png);}
+			#mytank{position: absolute;left:10px;top:100px}
+		</style>
+	</head>
+	<body>
+		<h1>w:前进；s:后退；a:左转；d:右转</h1>
+		<button type="button" onclick="lick(0)" >设置速度</button>
+		<button type="button" onclick="lick(1)" >恢复默认值</button>
+		<img id="mytank" src="img/tank/right.png"/>
+		<script>
+			// 编写代码，让坦克能上下左右移动
+			let mytank = document.getElementById("mytank");
+			let angle = 0;
+			let m = 20;
+			window.addEventListener("keypress",function(e){
+				//console.log(e.keyCode)w:87,a:65,s:83,d:68
+				let style = window.getComputedStyle(mytank);
+				let matrix = new WebKitCSSMatrix(style.transform);
+				let a = Math.round(Math.asin(matrix.b) * (180/Math.PI));
+				
+				if(angle == 360 || angle == -360){
+					angle = 0;
+				}
+				
+				if(e.key == 'w' || e.key == 'W'){
+					move(angle,a);
+				}
+				if(e.key == 's' || e.key == 'S'){
+					reversing(angle,a);
+					//console.log(a)
+					//35,-35
+					//-35,-90
+				}
+				
+				if(e.key == 'a' || e.key == 'A'){
+					angle -= 15;
+					mytank.style.transform = `rotate(${angle}deg)`;
+				}
+				if(e.key == 'd' || e.key == 'D'){
+					angle += 15;
+					mytank.style.transform = `rotate(${angle}deg)`;
+				}
+				
+			})
+			
+			function move(angle,a){
+				console.log(window.innerHeight)
+				let lx = 10;
+				let ly = 100;
+				let x = parseInt(mytank.style.left);
+				if(!isNaN(parseInt(mytank.style.left))){
+					lx = parseInt(mytank.style.left);
+					ly = parseInt(mytank.style.top);
+				}
+				//console.log(angle)
+				if(-90 <= angle && angle <= 90 || -360 <= angle && angle <= -270 || 270 < angle && angle <= 360){
+					lx = lx + m*Math.cos(Math.PI/(180/a));
+					ly = ly + m*Math.sin(Math.PI/(180/a));
+					if(lx <= 1 || window.innerWidth-60 <= lx || ly <= 1 || window.innerHeight-60 <= ly){
+						return;
+					}							
+					mytank.style.left = lx + "px";
+					mytank.style.top = ly + "px";
+				}
+				if(90 < angle && angle <= 270 || -270 < angle && angle <= -90){
+					lx = lx - m*Math.cos(Math.PI/(180/a));
+					ly = ly + m*Math.sin(Math.PI/(180/a));
+					if(lx <= 1 || window.innerWidth-60 <= lx || ly <= 1 || window.innerHeight-60 <= ly){
+						return;
+					}							
+					mytank.style.left = lx + "px";
+					mytank.style.top = ly + "px";
+				}
+			}
+			function reversing(angle,a){
+					let lx = 10;
+					let ly = 100;
+					let x = parseInt(mytank.style.left);
+					if(!isNaN(parseInt(mytank.style.left))){
+						lx = parseInt(mytank.style.left);
+						ly = parseInt(mytank.style.top);
+					}
+					//console.log(angle)
+					if(-90 <= angle && angle <= 90 || -360 <= angle && angle <= -270 || 270 < angle && angle <= 360){
+						lx = lx - m*Math.cos(Math.PI/(180/a));
+						ly = ly - m*Math.sin(Math.PI/(180/a));
+						if(lx <= 1 || window.innerWidth-60 <= lx || ly <= 1 || window.innerHeight-60 <= ly){
+							return;
+						}							
+						mytank.style.left = lx + "px";
+						mytank.style.top = ly + "px";
+					}
+					if(90 < angle && angle <= 270 || -270 < angle && angle <= -90){
+						lx = lx + m*Math.cos(Math.PI/(180/a));
+						ly = ly - m*Math.sin(Math.PI/(180/a));
+						if(lx <= 1 || window.innerWidth-60 <= lx || ly <= 1 || window.innerHeight-60 <= ly){
+							return;
+						}							
+						mytank.style.left = lx + "px";
+						mytank.style.top = ly + "px";
+					}
+				}
+				function lick(n){
+					if(n == 0){
+						m1 = prompt("输入坦克速度");
+						if (!isNaN(m1)) {
+						  m = m1;
+						} else {
+						  alert("请输入数字")
+						}
+						}
+					if(n == 1){
+						m = 20;
+					}
+				}
+		</script>
+	</body>
+</html>
